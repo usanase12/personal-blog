@@ -1,12 +1,8 @@
-
 "use client";
-
-import React from "react";
-import { api } from "~/trpc/react-utils";
-
+import { api } from '../trpc/react-utils';
 
 export function PostList() {
- const postsQuery = api.posts.getAll.useQuery();
+  const postsQuery = api.posts.getAll.useQuery();
 
   if (postsQuery.isLoading) return <div>Loading posts...</div>;
   if (postsQuery.error) return <div>Error: {postsQuery.error.message}</div>;

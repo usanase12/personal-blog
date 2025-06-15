@@ -1,4 +1,5 @@
-import { PostList } from '~/components/postList';
+"use client";
+import { PostList } from '../components/postList';
 
 export default function HomePage() {
   return (

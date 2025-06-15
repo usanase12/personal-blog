@@ -1,14 +1,14 @@
+//react.tsx
 'use client';
 
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { httpBatchLink, loggerLink } from '@trpc/client';
 import SuperJSON from 'superjson';
-import { api } from './api';
+import { api } from './react-utils';
 
 export function TRPCReactProvider({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
-
   const [trpcClient] = useState(() =>
     api.createClient({
       links: [
@@ -23,13 +23,14 @@ export function TRPCReactProvider({ children }: { children: React.ReactNode }) {
     })
   );
 
+  // 👇 This is where you put the providers
   return (
-    <QueryClientProvider client={queryClient}>
-      {/* You might need to add <api.Provider client={trpcClient}> here */}
+  <QueryClientProvider client={queryClient}>
+    <api.Provider client={trpcClient} queryClient={queryClient}>
       {children}
-      {/* </api.Provider> */}
-    </QueryClientProvider>
-  );
+    </api.Provider>
+  </QueryClientProvider>
+);
 }
 
 function getBaseUrl() {
@@ -37,6 +38,3 @@ function getBaseUrl() {
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
   return `http://localhost:${process.env.PORT ?? 3000}`;
 }
-
-// Add this for testing:
-export const testExport = 123;
