@@ -1,11 +1,11 @@
-// src/server/api/root.ts or src/server/trpc.ts
-import { initTRPC } from '@trpc/server';
-import SuperJSON from 'superjson';
+// src/app/api/trpc/[trpc]/route.ts
+import { createNextApiHandler } from '@trpc/server/adapters/next';
+import { appRouter } from '../../../../server/api/root';
+import { createContext } from '../../../../server/api/context';
 
-const t = initTRPC.create({
-  transformer: SuperJSON, // ✅ Define it here on the server
-  isServer: true,
+const handler = createNextApiHandler({
+  router: appRouter,
+  createContext,
 });
 
-export const router = t.router;
-export const publicProcedure = t.procedure;
+export { handler as GET, handler as POST };
