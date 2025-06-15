@@ -1,23 +1,17 @@
-import { postRouter } from "~/server/api/routers/post";
-import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
+// src/server/api/root.ts
+import { router, publicProcedure } from '../trpc';
+import { z } from 'zod';
 
-/**
- * This is the primary router for your server.
- *
- * All routers added in /api/routers should be manually added here.
- */
-export const appRouter = createTRPCRouter({
-  post: postRouter,
+export const appRouter = router({
+  hello: publicProcedure.query(() => 'Hello from tRPC'),
+  posts: router({
+    create: publicProcedure
+      .input(z.object({ title: z.string(), content: z.string() }))
+      .mutation(({ input }) => ({
+        id: Math.random().toString(),
+        ...input,
+      })),
+  }),
 });
 
-// export type definition of API
 export type AppRouter = typeof appRouter;
-
-/**
- * Create a server-side caller for the tRPC API.
- * @example
- * const trpc = createCaller(createContext);
- * const res = await trpc.post.all();
- *       ^? Post[]
- */
-export const createCaller = createCallerFactory(appRouter);

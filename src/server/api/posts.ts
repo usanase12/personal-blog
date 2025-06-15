@@ -1,26 +1,22 @@
-
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { posts } from "~/server/db/schema";  // Import your schema
-import { eq, desc } from "drizzle-orm";       // Import helpers
+import { posts } from "~/server/db/schema";
+import { eq, desc } from "drizzle-orm";
 
 export const postsRouter = createTRPCRouter({
-  // Get all posts, ordered by createdAt descending
+  // Fetch all posts
   getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.db
-      .select()
-      .from(posts)
-      .orderBy(desc(posts.createdAt));  // Use desc() helper here
+    return ctx.db.select().from(posts).orderBy(desc(posts.createdAt));
   }),
 
-  // Get post by ID
+  // Fetch a single post by ID
   getById: publicProcedure
     .input(z.object({ id: z.number() }))
     .query(({ ctx, input }) => {
       return ctx.db
         .select()
         .from(posts)
-        .where(eq(posts.id, input.id))   // Use eq() helper here
+        .where(eq(posts.id, input.id))
         .limit(1)
         .then((res) => res[0]);
     }),
@@ -37,12 +33,11 @@ export const postsRouter = createTRPCRouter({
       return ctx.db.insert(posts).values({
         title: input.title,
         content: input.content,
-        createdAt: Math.floor(Date.now() / 1000), // Unix timestamp for SQLite integer
+        createdAt: Math.floor(Date.now() / 1000),
       });
     }),
 
-    
-  // Update post by ID
+  // Update a post
   update: publicProcedure
     .input(
       z.object({
@@ -62,7 +57,7 @@ export const postsRouter = createTRPCRouter({
         .where(eq(posts.id, input.id));
     }),
 
-  // Delete post by ID
+  // Delete a post
   delete: publicProcedure
     .input(z.object({ id: z.number() }))
     .mutation(({ ctx, input }) => {

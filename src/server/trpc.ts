@@ -1,11 +1,14 @@
-// src/server/api/root.ts or src/server/trpc.ts
+// src/server/trpc.ts
+
 import { initTRPC } from '@trpc/server';
 import SuperJSON from 'superjson';
 
+// Create tRPC instance with server config
 const t = initTRPC.create({
-  transformer: SuperJSON, // ✅ Define it here on the server
+  transformer: SuperJSON, // ✅ Set transformer here
   isServer: true,
 });
 
+// Export router and procedures
 export const router = t.router;
 export const publicProcedure = t.procedure;
