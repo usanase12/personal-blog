@@ -1,29 +1,74 @@
-# Create T3 App
+# 📝 Personal Blog Platform
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+A simple and modern blog website where users can write, edit, and publish posts, view statistics, and more.
 
-## What's next? How do I make an app with this?
+---
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## 🚀 Features
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- ✅ Create, edit, and delete blog posts  
+- ✅ Organize posts by categories (Tech, Lifestyle, etc.)  
+- ✅ View post statistics  
+- ✅ User signup and login  
+- ✅ Full-text search functionality  
+- ✅ Rich text editor for writing posts  
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+---
 
-## Learn More
+## 📁 Project Structure
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+src/
+├── app/ # Website pages (routing)
+├── components/ # Reusable UI components
+├── server/ # Backend logic (API handlers, DB)
+└── trpc/ # tRPC API setup
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+---
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## 🛠️ Built With
 
-## How do I deploy this?
+- **Next.js** – React framework for fast, production-grade websites  
+- **TypeScript** – Strongly typed JavaScript  
+- **tRPC** – End-to-end typesafe APIs  
+- **Tailwind CSS** – Utility-first CSS for styling  
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+---
+
+## ⚙️ How to Run Locally
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/usanase12/personal-blog.git
+   cd personal-blog
+npm install
+npm run dev
+
+
+Open in your browser
+
+http://localhost:3000
+
+
+📸 What It Does
+✍️ Write and manage blog posts
+
+📂 Categorize posts (e.g., Tech, Lifestyle, Work)
+
+📊 View basic analytics on your dashboard
+
+🔐 Login and signup functionality
+
+💡 Inspiration
+Made with ❤️ using Next.js, tRPC, Tailwind CSS, and TypeScript.
+
+📫 Contact
+Feel free to reach out if you have questions or feedback!
+🔗 usanasesandra22@gmail.com
+
+
+
+
+
+
+
+
