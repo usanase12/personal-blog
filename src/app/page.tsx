@@ -1,3 +1,4 @@
+//page.tsx
 "use client";
 import { PostList } from '../components/postList';
 
