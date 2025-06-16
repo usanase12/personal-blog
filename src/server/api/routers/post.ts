@@ -1,29 +1,46 @@
 import { z } from "zod";
 import { router, publicProcedure } from "../trpc";
-import { posts } from "~/server/db/schema";
+import { PrismaClient } from "@prisma/client";
 
-export const postRouter = router({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }: { input: { text: string } }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
+const prisma = new PrismaClient();
 
+export const postsRouter = router({
+  getAll: publicProcedure.query(async () => {
+    return prisma.post.findMany({ orderBy: { createdAt: "desc" } });
+  }),
   create: publicProcedure
-    .input(z.object({ name: z.string().min(1) }))
-    .mutation(async ({ ctx, input }: { ctx: any; input: { name: string } }) => {
-      await ctx.db.insert(posts).values({
-        name: input.name,
+    .input(
+      z.object({
+        title: z.string(),
+        content: z.string(),
+        category: z.string(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      return prisma.post.create({ data: input });
+    }),
+  update: publicProcedure
+    .input(
+      z.object({
+        id: z.number(),
+        title: z.string(),
+        content: z.string(),
+        category: z.string(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      return prisma.post.update({
+        where: { id: input.id },
+        data: {
+          title: input.title,
+          content: input.content,
+          category: input.category,
+        },
       });
     }),
-
-  getLatest: publicProcedure.query(async ({ ctx }: { ctx: any }) => {
-    const post = await ctx.db.query.posts.findFirst({
-      orderBy: (posts: any, { desc }: { desc: any }) => [desc(posts.createdAt)],
-    });
-
-    return post ?? null;
-  }),
+   delete: publicProcedure
+    .input(z.object({ id: z.number() }))
+    .mutation(async ({ input }) => {
+      return prisma.post.delete({ where: { id: input.id } });
+    }),
 });
